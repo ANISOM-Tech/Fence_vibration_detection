@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Vibration</title>
+    <style>
+  #myHeader {
+  background-color: lightblue;
+  color:blue;
+  padding: 40px;
+  text-align: center;
+}
+.button {
+  border: none;
+  color: blue;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.wrapper {
+    text-align: center;
+}
+
+.button {
+    position: absolute;
+    top: 30%;
+    right:45%;
+}
+.button1 {background-color: #4CAF50;}
+</style>
+</head>
+
+<script type="text/javascript">
+                var intervalID = setInterval(update_values,1000);
+                $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+                function update_values() {
+                        $.getJSON($SCRIPT_ROOT + '/model_predict',
+
+                    function(data) {
+                        $('#result').text(data.result);
+                        console.log(data)
+                    });
+
+                    };
+
+                    function stopTextColor() {
+                    clearInterval(intervalID);
+                    }
+
+</script>
+    <body onload="update_values();">
+        <h1 style="text-align:center;">REAL TIME FENCE VIBRATION DETECTION</h1>
+        <p>
+            <h1 id="myHeader"><span id="result">result</span></h1></p>
+        <script>
+            document.getElementById("result").innerHTML = data.result;
+        </script>
+        <div class="wrapper">
+            <button class="button button1",onclick="stopTextColor();"><h2>STOP</h2></button></div>
+    </body>
+</html>
